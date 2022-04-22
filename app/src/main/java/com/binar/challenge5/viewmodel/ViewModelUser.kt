@@ -1,7 +1,12 @@
 package com.binar.challenge5.viewmodel
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binar.challenge5.ProfileActivity
@@ -15,6 +20,7 @@ import retrofit2.Response
 class ViewModelUser : ViewModel() {
     lateinit var liveDataUser : MutableLiveData<Responseuser>
 
+
     init {
         liveDataUser = MutableLiveData()
     }
@@ -23,25 +29,22 @@ class ViewModelUser : ViewModel() {
         return liveDataUser
     }
 
-    fun updateUser(id : String, username : String, nameLengkap : String, alamat : String, tanggal : String){
-        APIClient.instance.updateUser(id.toInt(), username, nameLengkap, alamat, tanggal)
+    fun updateUser(id : Int, username : String, nameLengkap : String, alamat : String, tanggal : String){
+        APIClient.instance.updateUser(id, username, nameLengkap, alamat, tanggal)
             .enqueue(object : Callback<Responseuser> {
                 override fun onResponse(
                     call: Call<Responseuser>,
                     response: Response<Responseuser>
                 ) {
-                    if (response.isSuccessful){
-                        liveDataUser.postValue(response.body())
-
-                    }else{
-                        liveDataUser.postValue(null)
-                    }
 
 
                 }
 
-                override fun onFailure(call: Call<Responseuser>, t: Throwable) {
-                    liveDataUser.postValue(null)
+                override fun onFailure(call: Call<Responseuser>, t: Throwable,  ) {
+
+
+
+                    liveDataUser.postValue(Responseuser(alamat, nameLengkap, tanggal, "", "", "",username))
 
                 }
 

@@ -113,7 +113,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:id="@+id/btnDaftar"
-        android:layout_marginTop="170dp"/>
+        android:layout_marginTop="220dp"/>
 
 
 

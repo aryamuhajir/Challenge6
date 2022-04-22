@@ -1,11 +1,13 @@
 package com.binar.challenge5
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.recreate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,7 +34,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val username = sf.getString("USERNAME","")
         val alamat = sf.getString("ALAMAT","")
-        val id = sf.getString("ID","")
+        val id = sf.getString("ID","")!!.toInt()
         val namaLengkap = sf.getString("NAMALENGKAP","")
         val tanggal = sf.getString("TANGGALLAHIR","")
 
@@ -47,41 +49,45 @@ class ProfileActivity : AppCompatActivity() {
             val alamat1 = updateAlamat.text.toString()
             val tanggal1 = updateTanggal.text.toString()
 
-            update(id!!, username1, namalengkap1, alamat1, tanggal1)
+            update(id, username1, namalengkap1, alamat1, tanggal1)
         }
 
         btnLogout.setOnClickListener {
-
-            logout()
+            val a = AlertDialog.Builder(this)
+                .setTitle("Log Out")
+                .setMessage("Apakah yakin Log out dari aplikasi?")
+                .setPositiveButton("YA") { dialog: DialogInterface, i: Int ->
+                    logout()
+                }
+                .setNegativeButton("TIDAK") {dialog : DialogInterface, i : Int ->
+                    dialog.dismiss()
+                }
+                .show()
         }
 
+
+
     }
-    fun update(id : String, username : String, completeName :String, dateofbirth : String, address : String){
+    fun update(id : Int, username : String, completeName :String, dateofbirth : String, address : String){
         viewModel = ViewModelProvider(this).get(ViewModelUser::class.java)
         viewModel.getLiveUserObserver().observe(this, Observer {
-            if (it  != null){
-                sf = ProfileActivity().getSharedPreferences("datalogin", Context.MODE_PRIVATE)
-                val nama = sf.edit()
-                nama.putString("USERNAME", it.username)
-                nama.putString("ALAMAT", it.address)
-                nama.putString("NAMALENGKAP", it.completeName)
-                nama.putString("TANGGALLAHIR", it.dateofbirth)
-                nama.apply()
-                Toast.makeText(this, "Berhasil Update Data", Toast.LENGTH_LONG ).show()
+            sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
 
-            }else{
-                sf = ProfileActivity().getSharedPreferences("datalogin", Context.MODE_PRIVATE)
-                val nama = sf.edit()
-                nama.putString("USERNAME", it?.username)
-                nama.putString("ALAMAT", it?.address)
-                nama.putString("NAMALENGKAP", it?.completeName)
-                nama.putString("TANGGALLAHIR", it?.dateofbirth)
-                nama.apply()
-                Toast.makeText(this, "Berhasil Update Data", Toast.LENGTH_LONG ).show()
-            }
+            val sfedit = sf.edit()
+            sfedit.putString("USERNAME", username)
+            sfedit.putString("ALAMAT", address)
+            sfedit.putString("TANGGALLAHIR", dateofbirth)
+            sfedit.putString("NAMALENGKAP", completeName)
+            sfedit.apply()
+
+            Toast.makeText(this, "Berhasil update data", Toast.LENGTH_LONG).show()
+
 
         })
         viewModel.updateUser(id, username, completeName, dateofbirth, address)
+
+
+
 
     }
 

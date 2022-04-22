@@ -21,17 +21,27 @@ interface ApiService {
     fun loginUser(
         @Field("email") email: String,
         @Field("password") password: String
-    ) : Call<User>
+    ) : Call<Responseuser>
 
     @POST("updateuser.php")
     @FormUrlEncoded
     fun updateUser(
         @Field("id") id : Int,
         @Field("username") username: String,
-        @Field("complete_name") complete_name : String,
+        @Field("complete_name") completename : String,
         @Field("address") address : String,
-        @Field("dateofbirth") dateofbirth : String
+        @Field("dateofbirth") dateofbirth : String,
     ) : Call<Responseuser>
+
+    @POST("updateuser.php")
+    @FormUrlEncoded
+    fun updateUser2(
+        @Field("id") id: Int,
+        @Field("username") username: String,
+        @Field("complete_name") completename: String,
+        @Field("address") address: String,
+        @Field("dateofbirth") dateofbirth: String,
+    ): Call<List<Responseuser>>
 
 
 }

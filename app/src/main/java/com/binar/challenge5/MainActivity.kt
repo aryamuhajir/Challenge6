@@ -39,25 +39,26 @@ class MainActivity : AppCompatActivity() {
         val password = editPassword.text.toString()
         if (email.isNotBlank() && password.isNotBlank()){
             APIClient.instance.loginUser(email, password)
-                .enqueue(object : Callback<User>{
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                .enqueue(object : Callback<Responseuser>{
+                    override fun onResponse(call: Call<Responseuser>, response: Response<Responseuser>) {
                         if (response.code().toString().equals("404")){
                             Toast.makeText(applicationContext, "Email atau password salah!", Toast.LENGTH_LONG).show()
                         }else{
                             val sf = prefs2.edit()
-                            sf.putString("ID", response.body()?.responseuser?.id)
-                            sf.putString("USERNAME", response.body()?.responseuser?.username)
-                            sf.putString("EMAIL", response.body()?.responseuser?.email)
-                            sf.putString("NAMALENGKAP", response.body()?.responseuser?.completeName)
-                            sf.putString("TANGGALLAHIR", response.body()?.responseuser?.dateofbirth)
-                            sf.putString("ALAMAT", response.body()?.responseuser?.address)
+                            sf.putString("ID", response.body()?.id)
+                            sf.putString("USERNAME", response.body()?.username)
+                            sf.putString("EMAIL", response.body()?.email)
+                            sf.putString("NAMALENGKAP", response.body()?.completeName)
+                            sf.putString("TANGGALLAHIR", response.body()?.dateofbirth)
+                            sf.putString("ALAMAT", response.body()?.address)
                             sf.apply()
+                            //Toast.makeText(applicationContext, response.body()?.toString(), Toast.LENGTH_LONG).show()
 
                             startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                         }
                     }
 
-                    override fun onFailure(call: Call<User>, t: Throwable) {
+                    override fun onFailure(call: Call<Responseuser>, t: Throwable) {
                         Toast.makeText(applicationContext, "Gangguan API atau Jaringan!", Toast.LENGTH_LONG).show()
 
                     }
