@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backgrounda"
+
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/login"
+            android:layout_marginTop="30dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="320dp"
+            android:id="@+id/card1"
+            app:cardCornerRadius="10dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="match_parent"
+                android:hint="@string/masukkan_email"
+                android:id="@+id/editEmail"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:background="@null"
+                android:textSize="20sp"
+                android:inputType="textEmailAddress"
+                android:autofillHints="" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/card1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/card3"
+            app:cardCornerRadius="10dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="match_parent"
+                android:hint="@string/masukkan_password"
+                android:textColor="@color/black"
+                android:id="@+id/editPassword"
+                android:textColorHint="@color/black"
+                android:background="@null"
+                android:textSize="20sp"
+                android:inputType="textPassword"
+                android:autofillHints="" />
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginTop="195dp"
+        android:layout_below="@id/card3"
+        android:id="@+id/btnLogin"/>
+
+        <TextView
+            android:id="@+id/txtBlmPunyaAkun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/belum_punya_akun"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

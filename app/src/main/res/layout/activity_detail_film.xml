@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailFilm">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:text="Detail"
+            android:id="@+id/detail"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageFilm1"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JUDUL"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageFilm1"
+            android:id="@+id/txtJudul"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TANGGAL RILIS"
+            android:textSize="20sp"
+            android:textColor="#0DB3CF"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/txtJudul"
+            android:id="@+id/txtTanggal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUTRADARA"
+            android:textSize="20sp"
+            android:textColor="#F4B514"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/txtTanggal"
+            android:id="@+id/txtSutradara"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sinopsis"
+            android:textSize="16sp"
+            android:textColor="#3FBC54"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/txtSutradara"
+            android:id="@+id/txtSinopsis"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+</ScrollView>
