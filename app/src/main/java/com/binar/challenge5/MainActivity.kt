@@ -6,10 +6,13 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.binar.challenge5.model.DataItem
 import com.binar.challenge5.model.Responseuser
 import com.binar.challenge5.model.User
 import com.binar.challenge5.network.APIClient
+import com.binar.challenge5.viewmodel.ViewModelUser
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Call
@@ -30,8 +33,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
+            val email = editEmail.text.toString()
+            val password = editPassword.text.toString()
             login()
         }
+    }
+    fun login(email : String, password : String){
+        val viewModel = ViewModelProvider(this).get(ViewModelUser::class.java)
+        viewModel.getLoginUserObserver().observe(this, Observer {
+            if (it != null){
+                val sf = prefs2.edit()
+                sf.putString("ID", it?.id)
+                sf.putString("USERNAME", it?.username)
+                sf.putString("EMAIL", it?.email)
+                sf.putString("NAMALENGKAP", it?.completeName)
+                sf.putString("TANGGALLAHIR", it?.dateofbirth)
+                sf.putString("ALAMAT", it?.address)
+                sf.apply()
+                Toast.makeText(this, "Terdapat kesalahan input atau Jaringan!", Toast.LENGTH_LONG).show()
+
+                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+            }else{
+                Toast.makeText(this, "Terdapat kesalahan input atau Jaringan!", Toast.LENGTH_LONG).show()
+            }
+
+        })
+        viewModel.loginAPI(email, password)
+
     }
 
     fun login(){
