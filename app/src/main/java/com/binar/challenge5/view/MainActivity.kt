@@ -1,31 +1,34 @@
-package com.binar.challenge5
+package com.binar.challenge5.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.binar.challenge5.model.DataItem
+import com.binar.challenge5.R
 import com.binar.challenge5.model.Responseuser
-import com.binar.challenge5.model.User
 import com.binar.challenge5.network.APIClient
 import com.binar.challenge5.viewmodel.ViewModelUser
+import com.binar.challenge5.manager.UserManager
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.ResponseBody.Companion.toResponseBody
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
+
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    lateinit var prefs2 : SharedPreferences
+    //lateinit var prefs2 : SharedPreferences
+    lateinit var userManager: UserManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        prefs2 =  this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        userManager = UserManager(this)
+        //prefs2 =  this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
 
 
         txtBlmPunyaAkun.setOnClickListener {
@@ -42,15 +45,21 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this).get(ViewModelUser::class.java)
         viewModel.getLoginUserObserver().observe(this, Observer {
             if (it != null){
-                val sf = prefs2.edit()
-                sf.putString("ID", it?.id)
-                sf.putString("USERNAME", it?.username)
-                sf.putString("EMAIL", it?.email)
-                sf.putString("NAMALENGKAP", it?.completeName)
-                sf.putString("TANGGALLAHIR", it?.dateofbirth)
-                sf.putString("ALAMAT", it?.address)
-                sf.apply()
-                Toast.makeText(this, "Terdapat kesalahan input atau Jaringan!", Toast.LENGTH_LONG).show()
+                GlobalScope.launch {
+                    userManager.login(it.username, it.password, it.address, it.completeName, it.dateofbirth, it.email, it.id)
+                    userManager.setStatus("yes")
+                }
+
+//                val sf = prefs2.edit()
+//                sf.putString("ID", it?.id)
+//                sf.putString("USERNAME", it?.username)
+//                sf.putString("EMAIL", it?.email)
+//                sf.putString("NAMALENGKAP", it?.completeName)
+//                sf.putString("TANGGALLAHIR", it?.dateofbirth)
+//                sf.putString("ALAMAT", it?.address)
+//                sf.apply()
+                Toast.makeText(this, "Berhasil", Toast.LENGTH_LONG).show()
+                finish()
 
                 startActivity(Intent(this@MainActivity, HomeActivity::class.java))
             }else{
@@ -72,15 +81,20 @@ class MainActivity : AppCompatActivity() {
                         if (response.code().toString().equals("404")){
                             Toast.makeText(applicationContext, "Email atau password salah!", Toast.LENGTH_LONG).show()
                         }else{
-                            val sf = prefs2.edit()
-                            sf.putString("ID", response.body()?.id)
-                            sf.putString("USERNAME", response.body()?.username)
-                            sf.putString("EMAIL", response.body()?.email)
-                            sf.putString("NAMALENGKAP", response.body()?.completeName)
-                            sf.putString("TANGGALLAHIR", response.body()?.dateofbirth)
-                            sf.putString("ALAMAT", response.body()?.address)
-                            sf.apply()
+                            GlobalScope.launch {
+                                userManager.login(response.body()!!.username, response.body()!!.password, response.body()!!.address, response.body()!!.completeName, response.body()!!.dateofbirth, response.body()!!.email, response.body()!!.id)
+                                userManager.setStatus("yes")
+                            }
+//                            val sf = prefs2.edit()
+//                            sf.putString("ID", response.body()?.id)
+//                            sf.putString("USERNAME", response.body()?.username)
+//                            sf.putString("EMAIL", response.body()?.email)
+//                            sf.putString("NAMALENGKAP", response.body()?.completeName)
+//                            sf.putString("TANGGALLAHIR", response.body()?.dateofbirth)
+//                            sf.putString("ALAMAT", response.body()?.address)
+//                            sf.apply()
                             //Toast.makeText(applicationContext, response.body()?.toString(), Toast.LENGTH_LONG).show()
+                            finish()
 
                             startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                         }

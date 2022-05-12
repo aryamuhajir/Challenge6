@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:background="@drawable/backgrounda"
-    tools:context=".RegisterActivitiy">
+    tools:context=".view.RegisterActivitiy">
 
     <TextView
         android:layout_width="wrap_content"

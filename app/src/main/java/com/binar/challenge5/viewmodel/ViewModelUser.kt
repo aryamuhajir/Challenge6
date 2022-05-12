@@ -1,23 +1,11 @@
 package com.binar.challenge5.viewmodel
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.binar.challenge5.HomeActivity
-import com.binar.challenge5.ProfileActivity
 import com.binar.challenge5.model.ResponseRegister
 import com.binar.challenge5.model.Responseuser
 import com.binar.challenge5.network.APIClient
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

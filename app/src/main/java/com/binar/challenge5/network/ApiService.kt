@@ -7,6 +7,8 @@ import retrofit2.http.*
 interface ApiService {
     @GET("apifilm.php")
     fun getAllFilm() : Call<List<GetAllFilmResponseItem>>
+    @GET("film")
+    fun getAllFilm2() : Call<List<DataFilmBaruItem>>
 
     @POST ("register.php/")
     @FormUrlEncoded

@@ -1,11 +1,11 @@
-package com.binar.challenge5
+package com.binar.challenge5.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.binar.challenge5.R
 import com.binar.challenge5.model.ResponseRegister
 import com.binar.challenge5.network.APIClient
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_activitiy.*
 import retrofit2.Call
 import retrofit2.Callback

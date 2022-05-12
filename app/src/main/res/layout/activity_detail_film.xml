@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailFilm">
+    tools:context=".view.DetailFilm">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,6 +18,16 @@
             android:text="Detail"
             android:id="@+id/detail"
             android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:id="@+id/btnFavorite2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:keepScreenOn="true"
+
+            android:background="@drawable/ic_baseline_star_border_24" />
 
         <ImageView
             android:layout_width="120dp"

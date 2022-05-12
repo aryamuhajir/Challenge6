@@ -1,47 +1,65 @@
-package com.binar.challenge5
+package com.binar.challenge5.view
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.recreate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.binar.challenge5.model.Responseuser
-import com.binar.challenge5.network.APIClient
-import com.binar.challenge5.viewmodel.ViewModelFilm
+import androidx.lifecycle.asLiveData
+import com.binar.challenge5.R
 import com.binar.challenge5.viewmodel.ViewModelUser
-import kotlinx.android.synthetic.main.activity_home.*
+import com.binar.challenge5.manager.UserManager
 import kotlinx.android.synthetic.main.activity_profile.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
-    lateinit var sf : SharedPreferences
+    //lateinit var sf : SharedPreferences
     lateinit var viewModel: ViewModelUser
+    lateinit var userManager : UserManager
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        var id : Int = 0
 
-        val username = sf.getString("USERNAME","")
-        val alamat = sf.getString("ALAMAT","")
-        val id = sf.getString("ID","")!!.toInt()
-        val namaLengkap = sf.getString("NAMALENGKAP","")
-        val tanggal = sf.getString("TANGGALLAHIR","")
+        userManager = UserManager(this)
+        userManager.userNAME.asLiveData().observe(this) {
+            updateUsername.setText(it)
+            userManager.userALAMAT.asLiveData().observe(this) {
+                updateAlamat.setText(it)
+                userManager.userCOMPLETE.asLiveData().observe(this) {
+                    updateLengkap.setText(it)
+                    userManager.userTANGGAL.asLiveData().observe(this) {
+                        updateTanggal.setText(it)
+                        userManager.userID.asLiveData().observe(this) {
+                            id = it.toInt()
 
-        updateUsername.setText(username)
-        updateAlamat.setText(alamat)
-        updateLengkap.setText(namaLengkap)
-        updateTanggal.setText(tanggal)
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+//        sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+//
+//        val username = sf.getString("USERNAME","")
+//        val alamat = sf.getString("ALAMAT","")
+//        val id = sf.getString("ID","")!!.toInt()
+//        val namaLengkap = sf.getString("NAMALENGKAP","")
+//        val tanggal = sf.getString("TANGGALLAHIR","")
+
+//        updateUsername.setText(username)
+//        updateAlamat.setText(alamat)
+//        updateLengkap.setText(namaLengkap)
+//        updateTanggal.setText(tanggal)
 
         btnUpdate.setOnClickListener {
             val username1 = updateUsername.text.toString()
@@ -71,14 +89,18 @@ class ProfileActivity : AppCompatActivity() {
     fun update(id : Int, username : String, completeName :String, dateofbirth : String, address : String){
         viewModel = ViewModelProvider(this).get(ViewModelUser::class.java)
         viewModel.getLiveUserObserver().observe(this, Observer {
-            sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+            //sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+            GlobalScope.launch {
+                userManager.update(username,address,completeName,dateofbirth)
+            }
 
-            val sfedit = sf.edit()
-            sfedit.putString("USERNAME", username)
-            sfedit.putString("ALAMAT", address)
-            sfedit.putString("TANGGALLAHIR", dateofbirth)
-            sfedit.putString("NAMALENGKAP", completeName)
-            sfedit.apply()
+
+//            val sfedit = sf.edit()
+//            sfedit.putString("USERNAME", username)
+//            sfedit.putString("ALAMAT", address)
+//            sfedit.putString("TANGGALLAHIR", dateofbirth)
+//            sfedit.putString("NAMALENGKAP", completeName)
+//            sfedit.apply()
 
             Toast.makeText(this, "Berhasil update data", Toast.LENGTH_LONG).show()
 
@@ -122,9 +144,13 @@ class ProfileActivity : AppCompatActivity() {
 //    }
 
     fun logout(){
-        val logoutsf = sf.edit()
-        logoutsf.clear()
-        logoutsf.apply()
+        GlobalScope.launch {
+            userManager.logout()
+            userManager.setStatus("no")
+        }
+//        val logoutsf = sf.edit()
+//        logoutsf.clear()
+//        logoutsf.apply()
         startActivity(Intent(this, MainActivity::class.java))
     }
 

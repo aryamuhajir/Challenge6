@@ -13,22 +13,25 @@
         android:theme="@style/Theme.Challenge5.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.FavoriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".view.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailFilm"
+            android:name=".view.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivitiy"
+            android:name=".view.DetailFilm"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.RegisterActivitiy"
             android:exported="false" />
         <activity
-            android:name=".Splash"
+            android:name=".view.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

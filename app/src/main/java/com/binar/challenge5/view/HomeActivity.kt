@@ -1,36 +1,41 @@
-package com.binar.challenge5
+package com.binar.challenge5.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.binar.challenge5.R
+import com.binar.challenge5.adapter.RvAdapter
 import com.binar.challenge5.viewmodel.ViewModelFilm
+import com.binar.challenge5.manager.UserManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     lateinit var adapterFilm : RvAdapter
-    lateinit var sf : SharedPreferences
+    //lateinit var sf : SharedPreferences
+    lateinit var userManager : UserManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        //sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        userManager = UserManager(this)
+        userManager.userNAME.asLiveData().observe(this) {
+            txtNama.text = it
+        }
 
-
-        val username = sf.getString("USERNAME","")
-        txtNama.text = username
+        //val username = sf.getString("USERNAME","")
 
         btnProfil.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
+        btnFavorite.setOnClickListener {
+            startActivity(Intent(this, FavoriteActivity::class.java))
 
-
-
-
+        }
 
         getDataFilm2()
     }
@@ -62,10 +67,12 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        //sf = this.getSharedPreferences("datalogin", Context.MODE_PRIVATE)
+        userManager.userNAME.asLiveData().observe(this, {
+            txtNama.text = it
+        })
 
 
-        val username = sf.getString("USERNAME","")
-        txtNama.text = username
+        //val username = sf.getString("USERNAME","")
     }
 }
