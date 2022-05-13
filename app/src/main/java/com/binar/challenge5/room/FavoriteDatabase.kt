@@ -1,4 +1,4 @@
-package com.binar.challenge5.manager
+package com.binar.challenge5.room
 
 import android.content.Context
 import androidx.room.Database
@@ -13,7 +13,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
 
     companion object{
         private var INSTANCE : FavoriteDatabase? = null
-        fun getInstance(context : Context):FavoriteDatabase? {
+        fun getInstance(context : Context): FavoriteDatabase? {
             if (INSTANCE == null){
                 synchronized(FavoriteDatabase::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,

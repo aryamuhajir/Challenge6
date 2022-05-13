@@ -1,7 +1,8 @@
-package com.binar.challenge5.manager
+package com.binar.challenge5.room
 
 import androidx.lifecycle.LiveData
 import com.binar.challenge5.model.Favorite
+import com.binar.challenge5.room.FavoriteDao
 
 class FavoriteRepository(private val favDao : FavoriteDao) {
 

@@ -3,6 +3,7 @@ package com.binar.challenge5.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,10 +23,14 @@ class FavoriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
 
+        getFav()
+
+    }
+    fun getFav(){
         val viewModel = ViewModelProvider(this).get(ViewModelFilm::class.java)
         viewModel.allFav.observe(this, Observer { list ->
             list?.let {
-                if (it != null){
+                if (it.size >= 1){
                     rv_fav.layoutManager = LinearLayoutManager(this)
                     adapterFavorite= FavAdapter (){
                         val pindah = Intent(this@FavoriteActivity, DetailFilm::class.java)
@@ -37,34 +42,17 @@ class FavoriteActivity : AppCompatActivity() {
                     rv_fav.adapter = adapterFavorite
                     adapterFavorite.setDataFilm(it!!)
                     adapterFavorite.notifyDataSetChanged()
-
+                    rv_fav.visibility = View.VISIBLE
                 }else{
-                    statusTxt.text = "BELOOM ADA FILM FAVORITE"
-
+                    rv_fav.visibility = View.INVISIBLE
+                    statusTxt.text = "BELUM ADA FILM FAVORITE"
                 }
-
             }
         })
-//        viewModel.getLiveFavObserver().observe(this){
-//            if (it != null){
-//                rv_fav.layoutManager = LinearLayoutManager(this)
-//                adapterFavorite = FavAdapter (){
-//                    val pindah = Intent(this@FavoriteActivity, DetailFilm::class.java)
-//                    pindah.putExtra("detailfilm", it)
-//                    startActivity(pindah)
-//                }
-//
-//                rv_fav.adapter = adapterFavorite
-//                adapterFavorite.setDataFilm(it!!)
-//                adapterFavorite.notifyDataSetChanged()
-//            }else{
-//
-//            }
-//        }
-//        viewModel.getFavItem()
+    }
 
-
-
-
+    override fun onRestart() {
+        super.onRestart()
+        getFav()
     }
 }

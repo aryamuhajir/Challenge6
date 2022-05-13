@@ -1,4 +1,4 @@
-package com.binar.challenge5.manager
+package com.binar.challenge5.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -20,7 +20,6 @@ interface FavoriteDao {
 
     @Query("DELETE FROM Favorite WHERE id = :id")
     suspend fun deleteFavoriteFilmById(id: String)
-
 
 
 }

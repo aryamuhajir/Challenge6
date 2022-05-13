@@ -19,12 +19,15 @@
         android:textColor="@color/white"/>
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:background="@drawable/ic_baseline_account_circle_24"
+        android:clickable="true"
+        app:civ_border_width="10dp"
+        android:id="@+id/imageBtn"
+        android:src="@drawable/ic_baseline_account_circle_24"
         android:backgroundTint="@color/white"/>
 
     <androidx.cardview.widget.CardView

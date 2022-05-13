@@ -15,7 +15,6 @@ class ViewModelUser : ViewModel() {
     lateinit var loginUser : MutableLiveData<Responseuser>
     lateinit var registerUser : MutableLiveData<ResponseRegister>
     lateinit var pesan : MutableLiveData<String>
-    lateinit var sf : SharedPreferences
 
 
 
