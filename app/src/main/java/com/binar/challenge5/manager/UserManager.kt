@@ -93,6 +93,6 @@ class UserManager(context : Context) {
         it[UserManager.STATUS] ?: "no"
     }
     val userIMAGE : Flow<String> = imageData.data.map {
-        it[UserManager.IMAGE] ?: ""
+        it[UserManager.IMAGE] ?: "x"
     }
 }

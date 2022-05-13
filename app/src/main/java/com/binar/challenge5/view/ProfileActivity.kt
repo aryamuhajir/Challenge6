@@ -49,7 +49,7 @@ class ProfileActivity : AppCompatActivity() {
                             id = it.toInt()
                             userManager.userIMAGE.asLiveData().observe(this){
 
-                                //imageBtn.setImageURI(it.toUri())
+                                imageBtn.setImageURI(it.toUri())
                             }
 
                         }
@@ -60,9 +60,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         imageBtn.setOnClickListener {
-            if (isPermissionsAllowed()){
                 setImage()
-            }
+
         }
 
         btnUpdate.setOnClickListener {
