@@ -10,6 +10,8 @@ class UserManager(context : Context) {
     // dua data store, data user dan data status user
     private val dataStore : DataStore<Preferences> = context.createDataStore(name = "user_prefs2")
     private val dataStore2 : DataStore<Preferences> = context.createDataStore(name = "status")
+    private val imageData : DataStore<Preferences> = context.createDataStore(name = "image")
+
 
     companion object {
         //object data
@@ -21,6 +23,8 @@ class UserManager(context : Context) {
         val EMAIL = preferencesKey<String>("EMAIL")
         val ID = preferencesKey<String>("ID")
         val STATUS = preferencesKey<String>("STATUS")
+        val IMAGE = preferencesKey<String>("IMAGE")
+
 
     }
     //fungsi login insert data ke datastore
@@ -42,6 +46,13 @@ class UserManager(context : Context) {
             it[ADDRESS] = address
             it[COMPLETE] = complete
             it[DATEOFBIRTH] = dateof
+
+        }
+    }
+    suspend fun setImage(image: String){
+        imageData.edit {
+            it[IMAGE] = image
+
         }
     }
     // menghapus data yang ada di datastore
@@ -80,5 +91,8 @@ class UserManager(context : Context) {
     }
     val userSTATUS : Flow<String> = dataStore2.data.map {
         it[UserManager.STATUS] ?: "no"
+    }
+    val userIMAGE : Flow<String> = imageData.data.map {
+        it[UserManager.IMAGE] ?: ""
     }
 }
