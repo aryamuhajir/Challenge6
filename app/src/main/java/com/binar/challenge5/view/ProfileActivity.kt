@@ -20,6 +20,7 @@ import androidx.lifecycle.asLiveData
 import com.binar.challenge5.R
 import com.binar.challenge5.viewmodel.ViewModelUser
 import com.binar.challenge5.manager.UserManager
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -48,8 +49,9 @@ class ProfileActivity : AppCompatActivity() {
                         userManager.userID.asLiveData().observe(this) {
                             id = it.toInt()
                             userManager.userIMAGE.asLiveData().observe(this){
+                                Glide.with(this).load(it).into(imageBtn)
 
-                                imageBtn.setImageURI(it.toUri())
+                                //imageBtn.setImageURI(it.toUri())
                             }
 
                         }
@@ -59,7 +61,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        imageBtn.setOnClickListener {
+        btnPick.setOnClickListener {
                 setImage()
 
         }
@@ -99,7 +101,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 100 && resultCode === RESULT_OK) {
+        if (requestCode == 100 && resultCode === RESULT_OK && data != null) {
             imageBtn.setImageURI(data?.data)
             GlobalScope.launch {
                 userManager.setImage(data?.data.toString())
